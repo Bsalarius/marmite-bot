@@ -4,6 +4,10 @@ Marmite Bot is a Twitter Bot designed to listen to a user, and tweet what they s
 
 ## Usage
 ---
+### Prerequisites
+- Node.JS (with npm)
+- Twitter App & Keys
+
 ### Installation
 To download the bot, simply clone this repository to your system.
 
