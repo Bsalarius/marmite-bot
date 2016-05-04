@@ -5,9 +5,12 @@ Marmite Bot is a Twitter Bot designed to listen to a user, and tweet what they s
 ## Usage
 ---
 ### Installation
-To download the bot, simply clone this repository to your system. \
-`git clone https://github.com/lolPants/marmite-bot.git` \
-And then install Node.JS Dependencies with \
+To download the bot, simply clone this repository to your system.
+
+`git clone https://github.com/lolPants/marmite-bot.git`
+
+And then install Node.JS Dependencies with
+
 `npm install`
 
 ### Setup
@@ -25,7 +28,8 @@ var T = new Twit({
 
 ---
 
-Then place the username of the user you want the bot to listen to in the `doLoop()` function. \
+Then place the username of the user you want the bot to listen to in the `doLoop()` function.
+
 Example:
 
 ```
@@ -35,7 +39,8 @@ function doLoop() {
 }
 ```
 ### Running
-To run the bot once installed and set up, just make sure you are in the directory and run: `node .` \
+To run the bot once installed and set up, just make sure you are in the directory and run: `node .`
+
 Is is best if you run this in a virtual window (eg: Screen or TMux)
 
 ---
