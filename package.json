@@ -1,0 +1,16 @@
+{
+  "name": "Marmite_Bot",
+  "version": "2.1.4",
+  "description": "A bot named Marmite. Easy to use replybot for Twitter",
+  "main": "marmite.js",
+  "scripts": {
+    "start": "node marmite.js"
+  },
+  "author": "Jack Baron",
+  "license": "Apache 2.0",
+  "dependencies": {
+    "async": "^1.5.2",
+    "node-restclient": "0.0.1",
+    "twit": "^2.2.4"
+  }
+}
