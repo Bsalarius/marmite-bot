@@ -32,9 +32,7 @@ function getTweets(user) {
                   count: 1 };
 
   T.get('statuses/user_timeline', options, function (err, data) {
-    var fs = require('fs');
     for (var i = 0; i < data.length ; i++) {
-      var fs = require('fs');
       var msg = data[i].text;
       if (data[i].text == readFile()) {
         //The Tweet is the same
@@ -81,9 +79,9 @@ function getTweets(user) {
               'I': 'U',
               'O': 'U'
             };
-            for (var i = 0; i < changeChars.length; i++) {
-              var changeFrom = Object.keys(changeChars)[i];
-              var changeTo = changeChars[i];
+            for (var k = 0; k < changeChars.length; k++) {
+              var changeFrom = Object.keys(changeChars)[k];
+              var changeTo = changeChars[k];
               changeText = changeText.replace(new RegExp(escapeRegExp(changeFrom), 'g'), changeTo);
             }
 
