@@ -106,7 +106,9 @@ function getTweets(user) {
 }
 
 function doLoop() {
-  getTweets(conf.twitter_username);
+  for (var i = 0; i < cond.twitter_usernames; i++) {
+    getTweets(conf.twitter_usernames[i]);
+  }
 }
 
 /*

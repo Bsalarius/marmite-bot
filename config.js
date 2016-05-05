@@ -1,5 +1,5 @@
 module.exports = {
-  twitter_username:       '',
+  twitter_usernames:       ['', ''],
   twit_conf: {
     consumer_key:         '',
     consumer_secret:      '',
