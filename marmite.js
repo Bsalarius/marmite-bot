@@ -6,13 +6,17 @@ var conf = require('./config');
 // Put your Twitter App Details in the config.js file :D
 var T = new Twit(conf.twit_conf);
 
+function log(msg) {
+  console.log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ']' + msg);
+}
+
 // Favourites any retweets
 function favRTs () {
   T.get('statuses/retweets_of_me', {}, function (e,r) {
     for(var i = 0; i < r.length; i++) {
       T.post('favorites/create/' + r[i].id_str, {}, function () {});
     }
-    console.log('RTs fave\'d'); 
+    log('RTs fave\'d'); 
   });
 }
 
@@ -95,16 +99,16 @@ function getTweets(user) {
 
         // Post the tweet
         T.post('statuses/update', { status: '"' + ttt + '" @' + user }, function(err, data, response) {
-          console.log(data);
+          log(data);
         })
       }
       // Save the tweet to check against later
       fs.writeFile(__dirname + "/latest", msg, function(err) {
         if (err) {
-          return console.log(err);
+          return log(err);
         }
         var d = new Date();
-        console.log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '] Bot ran successfully!');
+        log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '] Bot ran successfully!');
       });
     }
   });
@@ -126,7 +130,7 @@ setInterval(function() {
   try {
     doLoop();
   } catch (e) {
-    console.log(e);
+    log(e);
   }
 }, 5000);
 
@@ -135,6 +139,6 @@ setInterval(function() {
   try {
     favRTs();
   } catch (e) {
-    console.log(e);
+    log(e);
   }
 }, 60000 * 60 * 5);
