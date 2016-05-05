@@ -1,4 +1,5 @@
 var restclient = require('node-restclient');
+var fs = require("fs");
 var Twit = require('twit');
 var conf = require('./config');
 
@@ -8,18 +9,16 @@ var T = new Twit(conf.twit_conf);
 // Favourites any retweets
 function favRTs () {
   T.get('statuses/retweets_of_me', {}, function (e,r) {
-    for(var i=0;i<r.length;i++) {
-      T.post('favorites/create/'+r[i].id_str,{},function(){});
+    for(var i = 0; i < r.length; i++) {
+      T.post('favorites/create/' + r[i].id_str, {}, function () {});
     }
     console.log('RTs fave\'d'); 
   });
 }
 
-
 // Function to read a file, simple
 function readFile() {
-  var fs = require("fs");
-  var contents = fs.readFileSync(__dirname+"/latest", "utf8");
+  var contents = fs.readFileSync(__dirname + "/latest", "utf8");
   return contents;
 }
 
@@ -28,7 +27,7 @@ function getTweets(user) {
   var options = { screen_name: user,
                   count: 1 };
 
-  T.get('statuses/user_timeline', options , function gotData(err, data) {
+  T.get('statuses/user_timeline', options, function (err, data) {
     var fs = require('fs');
     for (var i = 0; i < data.length ; i++) {
       var fs = require('fs');
@@ -68,14 +67,21 @@ function getTweets(user) {
             changeText = arr[i];
 
             // Modify Text
-            changeText = changeText.replace(new RegExp(escapeRegExp("a"), 'g'), "u");
-            changeText = changeText.replace(new RegExp(escapeRegExp("e"), 'g'), "u");
-            changeText = changeText.replace(new RegExp(escapeRegExp("i"), 'g'), "u");
-            changeText = changeText.replace(new RegExp(escapeRegExp("o"), 'g'), "u");
-            changeText = changeText.replace(new RegExp(escapeRegExp("A"), 'g'), "U");
-            changeText = changeText.replace(new RegExp(escapeRegExp("E"), 'g'), "U");
-            changeText = changeText.replace(new RegExp(escapeRegExp("I"), 'g'), "U");
-            changeText = changeText.replace(new RegExp(escapeRegExp("O"), 'g'), "U");
+            var changeChars = {
+              'a': 'u',
+              'e': 'u',
+              'i': 'u',
+              'o': 'u',
+              'A': 'U',
+              'E': 'U',
+              'I': 'U',
+              'O': 'U'
+            };
+            for (var i = 0; i < changeChars.length; i++) {
+              var changeFrom = Object.keys(changeChars)[i];
+              var changeTo = changeChars[i];
+              changeText = changeText.replace(new RegExp(escapeRegExp(changeFrom), 'g'), changeTo);
+            }
 
             recon += changeText;
           }
@@ -88,13 +94,13 @@ function getTweets(user) {
         ttt = recon.slice(0, -1);
 
         // Post the tweet
-        T.post('statuses/update', { status: '"'+ttt+'" @'+user }, function(err, data, response) {
-          console.log(data)
+        T.post('statuses/update', { status: '"' + ttt + '" @' + user }, function(err, data, response) {
+          console.log(data);
         })
       }
       // Save the tweet to check against later
-      fs.writeFile(__dirname+"/latest", msg, function(err) {
-        if(err) {
+      fs.writeFile(__dirname + "/latest", msg, function(err) {
+        if (err) {
           return console.log(err);
         }
         var d = new Date();
@@ -119,18 +125,16 @@ function doLoop() {
 setInterval(function() {
   try {
     doLoop();
-  }
- catch (e) {
+  } catch (e) {
     console.log(e);
   }
-},5000);
+}, 5000);
 
 // Every 5 hours, check for retweets, and fave them ;)
 setInterval(function() {
   try {
     favRTs();
-  }
- catch (e) {
+  } catch (e) {
     console.log(e);
   }
-},60000*60*5);
+}, 60000 * 60 * 5);
