@@ -108,7 +108,7 @@ function getTweets(user) {
           return log(err);
         }
         var d = new Date();
-        log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '] Bot ran successfully!');
+        log('Bot ran successfully!');
       });
     }
   });
