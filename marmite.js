@@ -2,12 +2,24 @@ var restclient = require('node-restclient');
 var fs = require("fs");
 var Twit = require('twit');
 var conf = require('./config');
+var fsPath = __dirname + "/latest";
+var lastTweet = '';
 
 // Put your Twitter App Details in the config.js file :D
 var T = new Twit(conf.twit_conf);
 
 function log(msg) {
+  var d = new Date();
   console.log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '] ' + msg);
+}
+
+function canUseFS() {
+  try {
+    fs.accessSync(fsPath, fs.R_OK | fs.W_OK);
+  } catch (err) {
+    return false;
+  }
+  return true;
 }
 
 // Favourites any retweets
@@ -22,8 +34,12 @@ function favRTs() {
 
 // Function to read a file, simple
 function readFile() {
-  var contents = fs.readFileSync(__dirname + "/latest", "utf8");
-  return contents;
+  if (canUseFS()) {
+    var contents = fs.readFileSync(fsPath, "utf8");
+    return contents;
+  } else {
+    return lastTweet;
+  }
 }
 
 // Gets tweets and runs the bot (LEGACY FUNCTION NAME TOO LAZY TO CHANGE)
@@ -101,19 +117,24 @@ function getTweets(user) {
         });
       }
       // Save the tweet to check against later
-      fs.writeFile(__dirname + "/latest", msg, function(err) {
-        if (err) {
-          return log(err);
-        }
-        var d = new Date();
+      if (canUseFS()) {
+        fs.writeFile(fsPath, msg, function(err) {
+          if (err) {
+            return log(err);
+          }
+          log('Bot ran successfully!');
+        });
+      } else {
+        lastTweet = msg;
         log('Bot ran successfully!');
-      });
+      }
     }
   });
 }
 
 function doLoop() {
   for (var i = 0; i < conf.twitter_usernames; i++) {
+    log('Checking ' + conf.twitter_usernames[i] + '\'s tweets');
     getTweets(conf.twitter_usernames[i]);
   }
 }
