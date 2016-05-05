@@ -1,15 +1,10 @@
 var restclient = require('node-restclient');
 var Twit = require('twit');
+var conf = require('./config');
 var async = require('async');
 
-// Put your Twitter App Details here :D
-var T = new Twit({
-  consumer_key:         '',
-  consumer_secret:      '',
-  access_token:         '',
-  access_token_secret:  ''
-});
-
+// Put your Twitter App Details in the config.js file :D
+var T = new Twit(conf.twit_conf);
 
 // Favourites any retweets
 function favRTs () {
@@ -110,26 +105,9 @@ function getTweets(user) {
   });
 }
 
-
-//  ||
-//  ||
-//  ||
-//  ||
-//  ||
-//  \/
-
-// PUT YOUR TWITTER NAME HERE
 function doLoop() {
-  getTweets('');
+  getTweets(conf.twitter_username);
 }
-
-//  /\
-//  ||
-//  ||
-//  ||
-//  ||
-//  ||
-
 
 /*
   Every 2 minutes, run the script wrapped in

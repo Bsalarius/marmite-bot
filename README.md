@@ -50,4 +50,5 @@ Is is best if you run this in a virtual window (eg: Screen or TMux)
 ---
 ## Credits
 - Jack Baron (Code)
+- Ben Salt (Small Improvments)
 - DerpyChap (Idea / Moral Support)
