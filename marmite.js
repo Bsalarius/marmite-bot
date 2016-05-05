@@ -1,7 +1,6 @@
 var restclient = require('node-restclient');
 var Twit = require('twit');
 var conf = require('./config');
-var async = require('async');
 
 // Put your Twitter App Details in the config.js file :D
 var T = new Twit(conf.twit_conf);

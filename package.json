@@ -9,7 +9,6 @@
   "author": "Jack Baron",
   "license": "Apache 2.0",
   "dependencies": {
-    "async": "^1.5.2",
     "node-restclient": "0.0.1",
     "twit": "^2.2.4"
   }
