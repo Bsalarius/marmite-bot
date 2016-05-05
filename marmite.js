@@ -3,6 +3,7 @@ var fs = require("fs");
 var Twit = require('twit');
 var conf = require('./config');
 var fsPath = __dirname + "/latest";
+var logPath = __dirname + '/marmite.log'; 
 var lastTweet = '';
 
 // Put your Twitter App Details in the config.js file :D
@@ -10,7 +11,20 @@ var T = new Twit(conf.twit_conf);
 
 function log(msg) {
   var d = new Date();
-  console.log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '] ' + msg);
+  var data = '[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '] ' + msg;
+  console.log(data);
+  fs.access(logPath, fs.R_OK | fs.W_OK, function(err) {
+    if (err) {
+      // cant save to file
+      console.error("Failed to output to marmite.log");
+    } else {
+      fs.appendFile(logPath, data + '\n', 'utf8', function(err) {
+        if (err) {
+          console.error("Failed to output to marmite.log");
+        }
+      });
+    }
+  });
 }
 
 function canUseFS() {
@@ -98,6 +112,7 @@ function getTweets(user) {
             for (var k = 0; k < changeChars.length; k++) {
               var changeFrom = Object.keys(changeChars)[k];
               var changeTo = changeChars[k];
+              console.log('Changing character ' + changeFrom + ' to ' + changeTo);
               changeText = changeText.replace(new RegExp(escapeRegExp(changeFrom), 'g'), changeTo);
             }
 
