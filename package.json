@@ -4,7 +4,8 @@
   "description": "A bot named Marmite. Easy to use replybot for Twitter",
   "main": "marmite.js",
   "scripts": {
-    "start": "node marmite.js"
+    "start": "node marmite.js",
+    "test": "node marmite_test.js"
   },
   "author": "Jack Baron",
   "license": "SEE LICENSE IN LICENSE",
