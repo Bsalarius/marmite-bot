@@ -7,7 +7,7 @@ var conf = require('./config');
 var T = new Twit(conf.twit_conf);
 
 function log(msg) {
-  console.log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + ']' + msg);
+  console.log('[' + d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() + ' ' + d.getHours() + ':' + d.getMinutes() + ':' + d.getSeconds() + '] ' + msg);
 }
 
 // Favourites any retweets
@@ -16,7 +16,7 @@ function favRTs() {
     for(var i = 0; i < r.length; i++) {
       T.post('favorites/create/' + r[i].id_str, {}, function () {});
     }
-    log('RTs fave\'d'); 
+    log('RTs fave\'d');
   });
 }
 
@@ -98,7 +98,7 @@ function getTweets(user) {
         // Post the tweet
         T.post('statuses/update', { status: '"' + ttt + '" @' + user }, function(err, data, response) {
           log(data);
-        })
+        });
       }
       // Save the tweet to check against later
       fs.writeFile(__dirname + "/latest", msg, function(err) {
