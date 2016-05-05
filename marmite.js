@@ -133,7 +133,7 @@ function getTweets(user) {
 }
 
 function doLoop() {
-  for (var i = 0; i < conf.twitter_usernames; i++) {
+  for (var i = 0; i < conf.twitter_usernames.length; i++) {
     log('Checking ' + conf.twitter_usernames[i] + '\'s tweets');
     getTweets(conf.twitter_usernames[i]);
   }
