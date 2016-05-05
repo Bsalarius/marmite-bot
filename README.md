@@ -18,34 +18,36 @@ And then install Node.JS Dependencies with
 `npm install`
 
 ### Setup
-Place your Twitter App Keys in the area at the top of `marmite.js`
+Place your Twitter App Keys in the area at the top of `config.js`
 
-```
-// Put your Twitter App Details here :D
-var T = new Twit({
-  consumer_key:         '',
-  consumer_secret:      '',
-  access_token:         '',
-  access_token_secret:  ''
-});
+```js
+module.exports = {
+  ...
+  twit_conf: {
+    consumer_key:         '',
+    consumer_secret:      '',
+    access_token:         '',
+    access_token_secret:  ''
+  }
+};
 ```
 
 ---
 
-Then place the username of the user you want the bot to listen to in the `doLoop()` function.
+Then place the username of the user you want the bot to listen to in the same place.
 
 Example:
 
-```
-// PUT YOUR TWITTER NAME HERE
-function doLoop() {
-  getTweets('jackbaronlp');
-}
+```js
+module.exports = {
+  twitter_usernames:       ['', ''],
+  ...
+};
 ```
 ### Running
 To run the bot once installed and set up, just make sure you are in the directory and run: `node .`
 
-Is is best if you run this in a virtual window (eg: Screen or TMux)
+Is is best if you run this in a virtual window (eg: Screen or TMux), or using a daemon (eg: PM2).
 
 ---
 ## Credits
