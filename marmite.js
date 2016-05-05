@@ -11,7 +11,7 @@ function log(msg) {
 }
 
 // Favourites any retweets
-function favRTs () {
+function favRTs() {
   T.get('statuses/retweets_of_me', {}, function (e,r) {
     for(var i = 0; i < r.length; i++) {
       T.post('favorites/create/' + r[i].id_str, {}, function () {});
